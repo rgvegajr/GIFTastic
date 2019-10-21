@@ -13,27 +13,21 @@
     <div class="container">
         <!-- row and columns for displaying topic buttons -->
         <div class="row">
-            <!-- <div class="col-md-1"> -->
-            <!-- buttons with airplanes from array -->
+            <!-- buttons with dogs from array -->
             <div id="buttons-view"></div>
-            <!-- <button data-airplane="F-15">F-15</button> -->
-
-            <!-- </div> -->
         </div>
-        <!-- form to enter new airplane -->
-        <!-- <div id="newAirplane" class="row">
-            <form id="airplane-form">
-                <label for="airplane-input">Add an airplane!</label>
-                <input type="text" id="airplane-input" placeholder="Enter name or designation i.e. 'Falcon' or 'F-16'">
-                <br>
-                <input id="add-airplane" type="submit" value="Add an airplane">
-            </form>
-
-        </div> -->
-        <!-- row and columns for displaying airplane gifs -->
-        <div id="dog-view" class="row gif">
-            <div class="col-md-1">
+        <!-- form to enter new dog -->
+        <form>
+            <div class="form-group">
+                <label for="dog-input">Add a dog!</label>
+                <input type="text" id="dog-input" placeholder="Enter dog breed...">
             </div>
+            <button id="add-dog" type="submit" class="btn btn-primary">Add a dog</button>
+        </form>
+
+        <!-- row and columns for displaying dog gifs -->
+        <div id="dog-view" class="row gif">
+
         </div>
     </div>
 
@@ -44,12 +38,27 @@
         function renderButtons() {
             $("#buttons-view").empty();
             for (let i = 0; i < dogs.length; i++) {
-                let a = $("<button data-dog=" + dogs[i] + " type='button' class='btn btn-primary'>");
+                let a = $("<button data-dog=" + dogs[i] + " type='button' class='btn btn-info'>");
                 a.text(dogs[i]);
                 $("#buttons-view").append(a);
             }
         };
         renderButtons();
+
+        //function to add dog to dog array from form input
+        // $("#add-dog").on("click", function(event) {
+        //     // event.preventDefault() prevents the form from trying to submit itself.
+        //     // We're using a form so that the user can hit enter instead of clicking the button if they want
+        //     event.preventDefault();
+
+        //     // This line will grab the text from the input box
+        //     let dog = $("#dog-input").val().trim();
+        //     // The movie from the textbox is then added to our array
+        //     dogs.push(dog);
+
+        //     // calling renderButtons which handles the processing of our movie array
+        //     renderButtons();
+        // });
 
         $(".gif").on("click", function() { //click on any element with class .gif to play or pause
             //sample html element for play/pause function below
