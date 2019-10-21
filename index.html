@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GIFTastic!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- row and columns for displaying topic buttons -->
+        <div class="row">
+            <!-- <div class="col-md-1"> -->
+            <!-- buttons with airplanes from array -->
+            <div id="buttons-view"></div>
+            <!-- <button data-airplane="F-15">F-15</button> -->
+
+            <!-- </div> -->
+        </div>
+        <!-- form to enter new airplane -->
+        <!-- <div id="newAirplane" class="row">
+            <form id="airplane-form">
+                <label for="airplane-input">Add an airplane!</label>
+                <input type="text" id="airplane-input" placeholder="Enter name or designation i.e. 'Falcon' or 'F-16'">
+                <br>
+                <input id="add-airplane" type="submit" value="Add an airplane">
+            </form>
+
+        </div> -->
+        <!-- row and columns for displaying airplane gifs -->
+        <div id="dog-view" class="row gif">
+            <div class="col-md-1">
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        let dogs = ["Labrador", "Beagle", "German Shepherd", "Dalmation", "Collie", "Weimaraner", "Puppies"];
+
+        function renderButtons() {
+            $("#buttons-view").empty();
+            for (let i = 0; i < dogs.length; i++) {
+                let a = $("<button data-dog=" + dogs[i] + " type='button' class='btn btn-primary'>");
+                a.text(dogs[i]);
+                $("#buttons-view").append(a);
+            }
+        };
+        renderButtons();
+
+        $(".gif").on("click", function() { //click on any element with class .gif to play or pause
+            //sample html element for play/pause function below
+            //<img src="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-still="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-animate="https://media3.giphy.com/media/W6LbnBigDe4ZG/200.gif" data-state="still" class="gif">
+            let state = $(this).attr("data-state");
+            if (state === "still") {
+                $(this).attr("src", $(this).attr("data-animate"));
+                $(this).attr("data-state", "animate");
+            };
+            if (state === "animate") {
+                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr("data-state", "still");
+            };
+        });
+
+        // insert code to creat and append new elements
+        $("button").on("click", function() { //function to return gifs upon button click
+            const dog = $(this).attr("data-dog"); // creates var to hold data-person value entered by user and returned by ajax call
+            const queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+                dog + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10"; //ajax call to giphy with person value.  Limit to 10 (via api)
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function(response) {
+                let results = response.data; //var to hold ajax response data
+                console.log(response);
+                $("#dog-view").empty();
+                for (let i = 0; i < results.length; i++) { //for length of results (10), create divs to hold and display ratings and images 
+                    const gifDiv = $("<div>");
+                    const rating = results[i].rating;
+                    const p = $("<p>").text("Rating: " + rating);
+                    const dogImage = $("<img>");
+                    dogImage.attr("src", results[i].images.fixed_height.url); //up date img src with returned value
+                    gifDiv.prepend(p); //add rating to div
+                    gifDiv.append(dogImage); //add image to div
+                    $("#dog-view").prepend(gifDiv); //add completed div to placeholder in html
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

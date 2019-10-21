@@ -1,0 +1,27 @@
+.container {
+    margin: 2%;
+    padding: 2px;
+}
+
+button {
+    padding: 4px 8px;
+    margin: 2px;
+}
+
+.row {
+    margin: 4px;
+}
+
+#airplane-view {
+    margin: 2px 4px;
+}
+
+p {
+    margin: 10px;
+}
+
+img {
+    margin: 10px;
+    height: 200px;
+    width: 200px;
+}
