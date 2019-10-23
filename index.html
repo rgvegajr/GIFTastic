@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-us">
 
 <head>
@@ -11,6 +11,7 @@
 
 <body>
     <div class="container">
+        <h1>Dogs, dogs, and more dogs!</h1>
         <!-- row and columns for displaying topic buttons -->
         <div class="row">
             <!-- buttons with dogs from array -->
@@ -20,25 +21,24 @@
         <form>
             <div class="form-group">
                 <label for="dog-input">Add a dog!</label>
+                <br>
                 <input type="text" id="dog-input" placeholder="Enter dog breed...">
             </div>
-            <button id="add-dog" type="submit" class="btn btn-primary">Add a dog</button>
+            <input id="add-dog" type="submit" class="btn btn-info" value="Submit">
         </form>
-
         <!-- row and columns for displaying dog gifs -->
-        <div id="dog-view" class="row gif">
-
+        <div id="dog-view" class="row">
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
-        let dogs = ["Labrador", "Beagle", "German Shepherd", "Dalmation", "Collie", "Weimaraner", "Puppies"];
+        let dogs = ["Labrador", "Beagle", "German_Shepherd", "Dalmation", "Collie", "Weimaraner", "Puppies"];
 
         function renderButtons() {
             $("#buttons-view").empty();
             for (let i = 0; i < dogs.length; i++) {
-                let a = $("<button data-dog=" + dogs[i] + " type='button' class='btn btn-info'>");
+                let a = $("<button data-dog=" + dogs[i] + " id='dogBtn' type='button' class='btn btn-info'>");
                 a.text(dogs[i]);
                 $("#buttons-view").append(a);
             }
@@ -46,57 +46,68 @@
         renderButtons();
 
         //function to add dog to dog array from form input
-        // $("#add-dog").on("click", function(event) {
-        //     // event.preventDefault() prevents the form from trying to submit itself.
-        //     // We're using a form so that the user can hit enter instead of clicking the button if they want
-        //     event.preventDefault();
+        $("#add-dog").on("click", function(event) {
+            // event.preventDefault() prevents the form from trying to submit itself.
+            // We're using a form so that the user can hit enter instead of clicking the button if they want
+            event.preventDefault();
+            // This line will grab the text from the input box
+            let dog = $("#dog-input").val().trim();
+            if (!dogs.includes(dog) && (dog !== "")) {
+                console.log("new dog = " + dog);
+                // The movie from the textbox is then added to our array
+                dogs.push(dog);
+                console.log(dogs);
 
-        //     // This line will grab the text from the input box
-        //     let dog = $("#dog-input").val().trim();
-        //     // The movie from the textbox is then added to our array
-        //     dogs.push(dog);
-
-        //     // calling renderButtons which handles the processing of our movie array
-        //     renderButtons();
-        // });
+                // calling renderButtons which handles the processing of our movie array
+                renderButtons();
+            } else {
+                alert("No dog entered or that dog breed/type already exists!");
+            }
+        });
 
         $(".gif").on("click", function() { //click on any element with class .gif to play or pause
-            //sample html element for play/pause function below
-            //<img src="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-still="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif" data-animate="https://media3.giphy.com/media/W6LbnBigDe4ZG/200.gif" data-state="still" class="gif">
             let state = $(this).attr("data-state");
+            console.log("State = " + state);
             if (state === "still") {
                 $(this).attr("src", $(this).attr("data-animate"));
                 $(this).attr("data-state", "animate");
-            };
-            if (state === "animate") {
+            } else {
                 $(this).attr("src", $(this).attr("data-still"));
                 $(this).attr("data-state", "still");
-            };
+            }
         });
 
-        // insert code to creat and append new elements
+        // insert code to create and append new gif elements
         $("button").on("click", function() { //function to return gifs upon button click
-            const dog = $(this).attr("data-dog"); // creates var to hold data-person value entered by user and returned by ajax call
+            const dog = $(this).attr("data-dog"); // creates var to hold data-dog value of the btn clicked by user and returned by ajax call
+            console.log(dog);
             const queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-                dog + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10"; //ajax call to giphy with person value.  Limit to 10 (via api)
+                dog + "&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9&limit=10"; //ajax call to giphy with dog value.  Limit to 10 (via api)
             $.ajax({
                 url: queryURL,
                 method: "GET"
             }).then(function(response) {
                 let results = response.data; //var to hold ajax response data
                 console.log(response);
-                $("#dog-view").empty();
+                // $("#dog-view").empty(); //clears the div from any existing gifs
                 for (let i = 0; i < results.length; i++) { //for length of results (10), create divs to hold and display ratings and images 
                     const gifDiv = $("<div>");
                     const rating = results[i].rating;
                     const p = $("<p>").text("Rating: " + rating);
                     const dogImage = $("<img>");
-                    dogImage.attr("src", results[i].images.fixed_height.url); //up date img src with returned value
+                    const dogImageStillUrl = results[i].images.fixed_height_still.url;
+                    const dogImageAnimateUrl = results[i].images.fixed_height.url;
+                    dogImage.attr("src", results[i].images.fixed_height_still.url); //up date img src with returned value
+                    dogImage.attr("data-still", dogImageStillUrl);
+                    dogImage.attr("data-animate", dogImageAnimateUrl);
+                    dogImage.attr("data-state", "still");
+                    dogImage.addClass("gif");
                     gifDiv.prepend(p); //add rating to div
                     gifDiv.append(dogImage); //add image to div
                     $("#dog-view").prepend(gifDiv); //add completed div to placeholder in html
                 }
             });
+
         });
     </script>
 </body>

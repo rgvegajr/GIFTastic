@@ -1,10 +1,27 @@
-.container {
+﻿.container {
     margin: 2%;
     padding: 2px;
 }
 
+h1 {
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    font-style: italic;
+    margin: 10px;
+}
+
 button {
     padding: 4px 8px;
+    margin: 4px;
+}
+
+label {
+    font-weight: bold;
+    margin: 4px;
+}
+
+#dog-input {
     margin: 2px;
 }
 
@@ -12,7 +29,12 @@ button {
     margin: 4px;
 }
 
-#airplane-view {
+form {
+    float: right;
+}
+
+#dog-view {
+    flaot: left;
     margin: 2px 4px;
 }
 
