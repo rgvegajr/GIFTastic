@@ -34,7 +34,7 @@ form {
 }
 
 #dog-view {
-    flaot: left;
+    /* float: left; */
     margin: 2px 4px;
 }
 

@@ -64,8 +64,9 @@ $(document).ready(function() {
                     dogImage.attr("data-still", dogImageStillUrl);
                     dogImage.attr("data-animate", dogImageAnimateUrl);
                     dogImage.attr("data-state", "still");
+                    dogImage.attr("id", "gif");
                     console.log("dog gif element created");
-                    dogImage.addClass("gif");
+                    // dogImage.addClass("gif");
                     // dogImage.attr("id", ("dogBtn-" + i));
                     // dogImage.attr("id", ("dogBtn-" + i));
                     gifDiv.prepend(p); //add rating to div
@@ -74,27 +75,27 @@ $(document).ready(function() {
                 };
             });
         });
-        // addListeners();
-        $("div").on("click ", ".gif", function() { //click on any dynamically generated element with class gif to play or pause
-            console.log("Animate loop!");
-            let state = $(this).attr("data-state");
-            console.log("Loop entry, State = " + state);
-            if (state === "still") {
-                console.log("still to animate loop");
-                $(this).attr("src", $(this).attr("data-animate"));
-                $(this).attr("data-state", "animate");
-                console.log("state now animate");
-            } else {
-                console.log("animate to still loop");
-                $(this).attr("src", $(this).attr("data-still"));
-                $(this).attr("data-state", "still");
-                console.log("state now still");
-            };
-            console.log("ready return");
-            return;
-        });
-
     };
+
+    $("div").on("click", "#gif", function() { //click on any dynamically generated element with class gif to play or pause
+        console.log("Animate loop!");
+        let state = $(this).attr("data-state");
+        console.log("Loop entry, State = " + state);
+        if (state === "still") {
+            console.log("still to animate loop");
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+            console.log("state now animate");
+        } else {
+            console.log("animate to still loop");
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
+            console.log("state now still");
+        };
+        // console.log("ready return");
+        // return;
+    });
+
     //function calls
     renderButtons();
     console.log("End of js script");
