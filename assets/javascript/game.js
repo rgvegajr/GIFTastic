@@ -76,7 +76,6 @@ $(document).ready(function() {
             });
         });
     };
-
     $("div").on("click", "#gif", function() { //click on any dynamically generated element with class gif to play or pause
         console.log("Animate loop!");
         let state = $(this).attr("data-state");
@@ -92,8 +91,8 @@ $(document).ready(function() {
             $(this).attr("data-state", "still");
             console.log("state now still");
         };
-        // console.log("ready return");
-        // return;
+        console.log("ready return");
+        return false;
     });
 
     //function calls
