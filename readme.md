@@ -3,4 +3,10 @@
 3. A form input is provided to allow user to create a new button from text input.  Code does a basic check to determine if input is blank or if breed alreay exists and alerts the user.  If breed entered does not exist, the entered text if added to the dog array and the buttons are rerendered to include the new entry.
 4. Once gifs are displayed, a single click of the mouse on any of the gifs will cause the gif to animate i.e. "play", a second click will stop the animation.
 
-Known issues:  the play/pause feature does not currently work.
+Known issues:  None.
+
+Future funcitonality planned:  
+1. Return a user selectable number of GIFs (currently hard coded for ten).
+2. Display additional metadata about each gif.
+3. Integrate with other APIs.
+4. Allow users to "favorite" their and locally store their favorite GIFs. 
