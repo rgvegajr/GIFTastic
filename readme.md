@@ -11,4 +11,5 @@ Future funcitonality planned:
 3. Integrate with other APIs.
 4. Allow users to "favorite" their and locally store their favorite GIFs. 
 
+Link:
 https://rgvegajr.github.io/GIFTastic/
